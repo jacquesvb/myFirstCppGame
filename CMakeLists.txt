@@ -17,11 +17,13 @@ else()
 	add_compile_options(-mavx2 -mfma) # make sure SIMD optimizations take place, but on linux and other platforms
 endif()
 
-
+# Ensure raylib is build as static libraries
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Raylib as static libraries" FORCE)
 
 project(mygame)
 
-
+# Add raylib and here you would add other libraries if needed
+add_subdirectory(thirdparty/raylib-6.0)
 
 # MY_SOURCES is defined to be a list of all the source files for my game 
 # DON'T ADD THE SOURCES BY HAND, they are already added with this macro
@@ -77,5 +79,6 @@ endif()
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 
 
-
+# Link raylib library statically, Here you would add other libraries
+target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE raylib_static)
 
