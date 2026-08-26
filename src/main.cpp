@@ -36,10 +36,14 @@ int main()
 	rlImGuiSetup(true);
 	
 	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable keyboard controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable gamepad controls
+	// io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable keyboard controls
+	// io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable gamepad controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;      // Enable docking
 	io.FontGlobalScale = widgetScale; // Scale ImGui's own font rendering to match the display's DPI
+
+	// ImGui::StyleColorsDark();
+	// ImGui::StyleColorsLight();
+	ImGui::StyleColorsClassic();
 #pragma endregion
 	
 	// Scale all ImGui widget sizes, padding, borders, etc. to match the display's DPI
@@ -69,11 +73,12 @@ int main()
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 		ImGui::PopStyleColor(2);
 	#pragma endregion
+		ImGui::Text("Booger");
 	#pragma region imgui windows
 		ImGui::Begin("First Window");
 
 		ImGui::Text("hello");
-		if (ImGui::Button("button"))
+		if (ImGui::Button("First button"))
 		{
 			std::cout << "Text\n";
 		}
@@ -94,6 +99,38 @@ int main()
 		}
 		ImGui::End();
 	#pragma endregion
+	#pragma region imgui windows
+		ImGui::Begin("Third Window");
+		ImGui::Text("Speed");
+		ImGui::SameLine();
+		ImGui::TextDisabled("(?)");
+
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+			ImGui::TextUnformatted("Set the speed of automatic scrolling");
+			ImGui::PopTextWrapPos();
+			ImGui::EndTooltip();
+		}
+		ImGui::End();
+	#pragma endregion
+	#pragma region imgui windows
+		ImGui::Begin("Fourth Window");
+		
+		static char buffer[128] = "";
+
+		ImGuiInputTextFlags flags =
+			ImGuiInputTextFlags_CharsNoBlank | // no spaces
+			ImGuiInputTextFlags_EnterReturnsTrue | // return true on enter
+			ImGuiInputTextFlags_AutoSelectAll; // select all text on focus
+
+			if (ImGui::InputText("Player Name", buffer, sizeof(buffer), flags))
+			{
+				std::cout << "Confirmed name: " << buffer << "\n";
+			}
+
+		ImGui::End();
 	#pragma region imgui
 		rlImGuiEnd();
 	#pragma endregion
