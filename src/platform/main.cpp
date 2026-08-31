@@ -64,7 +64,7 @@ int main(void)
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
-		ClearBackground(RAYWHITE);
+		ClearBackground(BLACK);
 
 		if (!updateGame(roboto, scaledFontSize))
 		{
