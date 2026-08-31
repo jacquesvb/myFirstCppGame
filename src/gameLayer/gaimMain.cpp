@@ -1,6 +1,6 @@
-#include <fstream>
 #include <raylib.h>
 #include "gameMain.h"
+#include <asserts.h>
 
 struct GameData
 {
@@ -17,7 +17,7 @@ bool updateGame(Font roboto, int scaledFontSize)
 {
     float deltaTime = GetFrameTime();
     if (deltaTime > 1.f / 5) { deltaTime = 1 /5.f; }
-    
+
     if (IsKeyDown(KEY_A)) { gameData.positionX -= 200 * deltaTime; }
     if (IsKeyDown(KEY_D)) { gameData.positionX += 200 * deltaTime; }
     if (IsKeyDown(KEY_W)) { gameData.positionY -= 200 * deltaTime; }
@@ -31,7 +31,4 @@ bool updateGame(Font roboto, int scaledFontSize)
 
 void closeGame()
 {
-    std::ofstream f("resources/log.txt", std::ios::app);
-    f << "\nCLOSED\n";
-    f.close();
 }

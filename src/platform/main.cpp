@@ -26,7 +26,7 @@ int main(void)
 	SetConfigFlags(FLAG_WINDOW_HIGHDPI |FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
 	InitWindow(1920, 1080, "window name");
 	SetExitKey(KEY_NULL); // Disable the default exit key (ESC) to prevent accidental closure
-	SetTargetFPS(120); // Set a high target FPS for smooth rendering
+	SetTargetFPS(240); // Set a high target FPS for smooth rendering
 
 	float dpiScale = DetectLinuxScale();
 	float widgetScale = 3.0f; // Scale ImGui widgets to be larger on high-DPI displays
@@ -66,10 +66,24 @@ int main(void)
 		BeginDrawing();
 		ClearBackground(BLACK);
 
+	#pragma region imgui
+		rlImGuiBegin();
+
+		// docking stuff
+		ImGui::PushStyleColor(ImGuiCol_WindowBg, {});
+		ImGui::PushStyleColor(ImGuiCol_DockingEmptyBg, {});
+		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+		ImGui::PopStyleColor(2);
+	#pragma endregion
+
 		if (!updateGame(roboto, scaledFontSize))
 		{
 			CloseWindow();
 		}
+
+	#pragma region imgui
+		rlImGuiEnd();
+	#pragma endregion
 		
 		EndDrawing();
 	}
